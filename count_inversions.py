@@ -47,7 +47,6 @@ def sort_and_count(array):
 def main():
   input_file = open('./array.txt','r')
   array = [i.strip() for i in input_file.readlines()]
-  print array[:10]
   print sort_and_count(array)
 
 if __name__ == "__main__":
