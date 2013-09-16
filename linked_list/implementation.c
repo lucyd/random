@@ -8,11 +8,13 @@ Date: 16th Sept, 2013
 #include<stdlib.h>
 
 // Declaration of a node in linked list
-typdef struct node
+struct node
 {
 	int data;
-	node* next;
-}node;
+	struct node* next;
+};
+
+typedef struct node node;
 
 // Function declarations
 int length(node* list);
@@ -107,10 +109,10 @@ node* find(node* haystack, int needle)
 {
 	if(haystack == NULL)
 		return NULL;
-	node* found = NULL, temp = haystack;
+	node *found = NULL, *temp = haystack;
 	while(temp != NULL)
 	{
-		if(temp->data == element)
+		if(temp->data == needle)
 		{
 			found = temp;
 			break;
@@ -125,7 +127,7 @@ node* reverse(node* list)
 {
 	if(list == NULL || list->next == NULL)
 		return list;
-	node* previous = list, current = NULL, next = NULL;
+	node *previous = list, *current = NULL, *next = NULL;
 	current = previous->next;
 	previous->next = NULL;
 	while(current != NULL)
@@ -135,14 +137,14 @@ node* reverse(node* list)
 		previous = current;
 		current = next;
 	}
-	return previuos;
+	return previous;
 }
 
 // Sorts(bubble) a list
 void bubble_sort(node* list)
 {
 	if (list == NULL || list->next == NULL)
-		return list;
+		return;
 	node* list_copy = NULL;
 	int temp = 0;
 	while(list->next != NULL)
