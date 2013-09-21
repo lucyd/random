@@ -158,3 +158,26 @@ void insert_recursive(bst* original, int element)
 	return;
 }
 
+// Recursively finds an element in the binary search tree
+bst* find(bst* tree, int element)
+{
+	if(tree == NULL)
+		return NULL;
+	else if(tree->data == element)
+		return tree;
+	else if(tree->data < element)
+		return find(tree->right, element);
+	else if(tree->data > element)
+		return find(tree->left, element);
+}
+
+// Returns the mirror representation of a binary search tree
+bst* mirror(bst* tree)
+{
+	if(tree == NULL)
+		return tree;
+	bst* mirror_node = create_new_node(tree->data);
+	mirror_node->left = mirror(tree->right);
+	mirror_node->right = mirror(tree->left);
+	return mirror_node;
+}
