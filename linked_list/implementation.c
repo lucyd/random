@@ -26,6 +26,9 @@ node* append(node* list1, node* list2);
 node* find(node* haystack, int needle);
 node* reverse(node* list);
 void bubble_sort(node* list);
+int check_loop(node* list);
+node* find_median(node* list);
+node* nthfromlast(node* list, int n);
 
 // Function definitions
 
@@ -164,3 +167,79 @@ void bubble_sort(node* list)
 		list = list->next;
 	}
 }
+
+// Returns 1 if there is a loop in the list, 0 otherwise
+int check_loop(node* list)
+{
+	if(list == NULL || list->next == NULL)
+		return 0;
+	node *slowPtr, *fastPtr;
+	slowPtr = fastPtr = list;
+	while(fastPtr != NULL && fastPtr->next != NULL)
+	{
+		slowPtr = slowPtr->next;
+		fastPtr = fastPtr->next->next;
+		if(slowPtr == fastPtr)
+			return 1;
+	}
+	return 0;
+}
+
+// Returns pointer to median of the list
+node* find_median(node* list)
+{
+	if(list == NULL || list->next == NULL)
+		return list;
+	node *slowPtr, *fastPtr;
+	slowPtr = fastPtr = list;
+	while(fastPtr != NULL && fastPtr->next != NULL)
+	{
+		slowPtr = slowPtr->next;
+		fastPtr = fastPtr->next->next;
+	}
+	return slowPtr;
+}
+
+// Returns the nth node from the last of the list
+node* nthfromlast(node* list, int n)
+{
+	//Recursive implementation
+	if(list == NULL || n<0)
+		return NULL;
+	else if(n == 1)
+	{
+		// Return pointer to last node
+		node* last = list;
+		while(last->next != NULL)
+			last = last->next;
+		return last;
+	}
+	else
+	{
+		// Return (n-1)th node from last of list->next
+		return nthfromlast(list->next, n-1);
+	}
+
+#ifdef _USE_ITERATIVE_
+	if(list == NULL || n<0)	
+		return NULL;
+	node *nth-node, *last;
+	int count = 0;
+	nth-node = last = list;
+	while(count < n)
+	{
+		last = last->next;
+		count++;
+		if(last == NULL)
+			return NULL;
+	}
+	while(last != NULL)
+	{
+		nth-node = nth-node->next;
+		last = last->next;
+	}
+	return nth-node;
+#endif
+
+}
+
