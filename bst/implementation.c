@@ -8,6 +8,7 @@ Date: Sept 19, 2013
 #include<stdlib.h>
 #include<math.h>
 #include<string.h>
+#include "../linked_list/implementation.c"
 
 // Structure definitions
 typdef struct node
@@ -31,6 +32,7 @@ bst* find(bst* tree, int element);
 void level_order_traversal(bst* tree);
 bst* mirror(bst* tree);
 bst* get_lca(bst* tree, int A, int B);
+void print_leaf_paths(bst* tree, node* current_path);
 
 // Function definitions
 
@@ -199,3 +201,20 @@ bst* get_lca(bst* tree, int A, int B)
 			return (left_lca ? left_lca : right_lca);
 	}
 }
+
+// Prints the paths to all the leaf nodes
+// To be called with arguments (root, NULL)
+void print_leaf_paths(bst* tree, node* current_path)
+{
+	if(tree->left == tree->right == NULL)
+		print(current_path);
+	else
+	{
+		node* current_node = insert_at_end(NULL, tree->data);
+		node* new_path = append(current_path, current_node);
+		print_leaf_paths(tree->left, new_path);
+		print_leaf_paths(tree->right, new_path);
+	}
+	return;
+}
+
