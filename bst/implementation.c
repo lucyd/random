@@ -181,3 +181,21 @@ bst* mirror(bst* tree)
 	mirror_node->right = mirror(tree->left);
 	return mirror_node;
 }
+
+// Returns the least common ancestor of nodes with data A and B
+bst* get_lca(bst* tree, int A, int B)
+{
+	if(tree == NULL)
+		return NULL;
+	else if(tree->data == A || tree->data == B)
+		return tree;
+	else
+	{
+		bst* left_lca = get_lca(tree->left, A, B);
+		bst* right_lca = get_lca(tree->right, A, B);
+		if(left_lca && right_lca)
+			return tree;
+		else
+			return (left_lca ? left_lca : right_lca);
+	}
+}
