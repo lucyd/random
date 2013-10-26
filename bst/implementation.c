@@ -29,6 +29,7 @@ bst* insert(bst* original, int element);
 void insert_recursive(bst* original, int element);
 void delete(bst* tree, int element);
 bst* find(bst* tree, int element);
+// Operations defined for binary trees
 void level_order_traversal(bst* tree);
 bst* mirror(bst* tree);
 bst* get_lca(bst* tree, int A, int B);
