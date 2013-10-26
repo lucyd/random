@@ -202,8 +202,7 @@ bst* get_lca(bst* tree, int A, int B)
 	}
 }
 
-// Prints the paths to all the leaf nodes
-// To be called with arguments (root, NULL)
+// Prints the paths to all the leaf nodes(arguments for init call - root, NULL)
 void print_leaf_paths(bst* tree, node* current_path)
 {
 	if(tree->left == tree->right == NULL)
