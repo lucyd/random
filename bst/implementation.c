@@ -33,6 +33,7 @@ void level_order_traversal(bst* tree);
 bst* mirror(bst* tree);
 bst* get_lca(bst* tree, int A, int B);
 void print_leaf_paths(bst* tree, node* current_path);
+int check_path_sum(bst* tree, int current_sum, int check_sum);
 
 // Function definitions
 
@@ -215,5 +216,16 @@ void print_leaf_paths(bst* tree, node* current_path)
 		print_leaf_paths(tree->right, new_path);
 	}
 	return;
+}
+
+// Returns 1 if check_sum is a valid sum of elements of a path in the tree
+//(arguments for init call - root, 0, sum)
+int check_path_sum(bst* tree, int current_sum, int check_sum)
+{
+	if(tree->data + current_sum == sum)
+		return 1;
+	else
+		return (check_path_sum(tree->left, current_sum + root->data, sum)
+				|| check_path_sum(tree->right, current_sum + root->data, sum));
 }
 
