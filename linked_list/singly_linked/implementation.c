@@ -17,7 +17,6 @@ struct node
 typedef struct node node;
 
 // Function declarations
-int length(node* list);
 node* insert_at_end(node* original, int element);
 node* insert_at_begin(node* original, int element);
 node* delete_at_end(node* original);
@@ -25,11 +24,12 @@ node* delete_at_begin(node* original);
 node* append(node* list1, node* list2);
 node* find(node* haystack, int needle);
 node* reverse(node* list);
-void bubble_sort(node* list);
-int check_loop(node* list);
 node* find_median(node* list);
 node* nthfromlast(node* list, int n);
 void print(node* list);
+void bubble_sort(node* list);
+int check_loop(node* list);
+int length(node* list);
 
 // Function definitions
 
