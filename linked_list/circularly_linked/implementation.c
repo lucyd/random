@@ -10,12 +10,14 @@
 #include<string.h>
 
 // Structure definitions
-typedef struct
+struct node
 {
 	int data;
-	node* previous;
-	node* next;
-} node;
+	struct node* previous;
+	struct node* next;
+};
+
+typedef struct node node;
 
 // Function prototypes
 // Basic ADT operations
@@ -29,9 +31,9 @@ int size(node* list);
 int size_recursive(node* list);
 int size_iterative(node* list);
 // Auxiliary operations
-void print(node* list);
+void print_list(node* list);
 node* reverse(node* list);
-node* find_median(node* list)
+node* find_median(node* list);
 
 // Function definitions
 // Returns empty list	
@@ -117,7 +119,7 @@ node* find(node* list, int element)
 			backward = backward->previous;
 		}
 	}
-	return found_node
+	return found_node;
 }
 
 // Returns size of list
@@ -163,7 +165,7 @@ int size_recursive(node* list)
 }
 
 // Prints the list linearly
-void print(node* list)
+void print_list(node* list)
 {
 	node* temp = list;
 	while(temp!=NULL)
@@ -187,7 +189,7 @@ node* reverse(node* list)
 		temp->next = temp2;
 		temp = temp->next;
 	}
-	while(temp!= list->previous)
+	while(temp!= list->previous);
 	return list->previous;	
 }
 

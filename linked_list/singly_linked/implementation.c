@@ -26,7 +26,7 @@ node* find(node* haystack, int needle);
 node* reverse(node* list);
 node* find_median(node* list);
 node* nthfromlast(node* list, int n);
-void print(node* list);
+void print_list(node* list);
 void bubble_sort(node* list);
 int check_loop(node* list);
 int length(node* list);
@@ -245,7 +245,7 @@ node* nthfromlast(node* list, int n)
 }
 
 // Prints the list
-void print(node* list)
+void print_list(node* list)
 {
 	if(list == NULL)
 	{
@@ -253,5 +253,5 @@ void print(node* list)
 		return;
 	}
 	printf("%d ", list->data);
-	print(list->next);
+	print_list(list->next);
 }

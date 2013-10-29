@@ -7,7 +7,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<limits.h>
-#include "../linked_list/implementation.c"
+#include "../linked_list/singly_linked/implementation.c"
 
 typedef node* stack;
 

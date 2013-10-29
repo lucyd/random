@@ -8,7 +8,7 @@ Date: Sept 19, 2013
 #include<stdlib.h>
 #include<math.h>
 #include<string.h>
-#include "../linked_list/implementation.c"
+#include "../linked_list/singly_linked/implementation.c"
 
 // Structure definitions
 typdef struct node
