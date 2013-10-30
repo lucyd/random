@@ -1,5 +1,5 @@
 /*
-   Implementation of queues using linked lists using simple arrays
+   Implementation of queues using dynamic arrays
    Author: Sreenatha Bhatlapenumarthi
    Date: Oct 26, 2013
 */
@@ -21,6 +21,7 @@ typedef struct
 queue create_empty_queue(int capacity);
 queue enqueue(queue q, int element);
 queue dequeue(queue q);
+queue resize(queue q);
 int size(queue q);
 int front(queue q);
 int is_empty(queue q);
@@ -47,8 +48,12 @@ queue enqueue(queue q, int element)
 {
 	if(is_full(q))
 	{
-		printf("Error: Queue is full\n");
-		exit(1);
+		#ifdef _RESIZE_ENABLED
+			q = resize(q);
+		#else
+			printf("Error: Queue is full\n");
+			exit(1);
+		#endif
 	}
 	q.array[q.rear] = element;
 	q.rear = (q.rear + 1)%q.capacity;
@@ -59,6 +64,17 @@ queue enqueue(queue q, int element)
 queue dequeue(queue q)
 {
 	q.front = (q.front + 1)%q.capacity;
+	return q;
+}
+
+// Returns queue with capacity doubled and order maintained
+queue resize(queue q)
+{
+	int i=0;
+	int* new_array = (int*) malloc(sizeof(int)*q.capacity*2);
+	for(i=q.front; i<q.rear; i++)
+		new_array[i-q.front] = q.array[i];
+	q.array = new_array;
 	return q;
 }
 
