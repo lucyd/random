@@ -8,24 +8,29 @@
 #include<stdlib.h>
 #include<limits.h>
 
+#ifdef _NO_DEFAULT_TYPEDEF
+typedef int element_type;
+#endif
+
 // Structure definitions
 typedef struct
 {
 	int front;
 	int rear;
 	int capacity;
-	int* array;
+	element_type* array;
 } queue;
 
 // Function prototypes
 queue create_empty_queue(int capacity);
-queue enqueue(queue q, int element);
+queue enqueue(queue q, element_type element);
 queue dequeue(queue q);
 queue resize(queue q);
+element_type front(queue q);
 int size(queue q);
-int front(queue q);
 int is_empty(queue q);
 int is_full(queue q);
+void free(queue q);
 
 // Function definitions
 // Creates an empty queue of given capacity
@@ -35,7 +40,7 @@ queue create_empty_queue(int capacity)
 	q.front = 0;
 	q.rear = 0;
 	q.capacity = capacity;
-	q.array = (int*)malloc(sizeof(int)*capacity);
+	q.array = (element_type*)malloc(sizeof(element_type)*capacity);
 	if(!q.array)
 	{
 		printf("Memory error: Cannot initialize queue\n");
@@ -44,15 +49,15 @@ queue create_empty_queue(int capacity)
 }
 
 // Inserts element at the rear end of queue
-queue enqueue(queue q, int element)
+queue enqueue(queue q, element_type element)
 {
 	if(is_full(q))
 	{
-		#ifdef _RESIZE_ENABLED
-			q = resize(q);
-		#else
+		#ifdef _RESIZE_DISABLED
 			printf("Error: Queue is full\n");
 			exit(1);
+		#else
+			q = resize(q);
 		#endif
 	}
 	q.array[q.rear] = element;
@@ -71,7 +76,7 @@ queue dequeue(queue q)
 queue resize(queue q)
 {
 	int i=0;
-	int* new_array = (int*) malloc(sizeof(int)*q.capacity*2);
+	element_type* new_array = (element_type*) malloc(sizeof(element_type)*q.capacity*2);
 	for(i=q.front; i<q.rear; i++)
 		new_array[i-q.front] = q.array[i];
 	q.array = new_array;
@@ -88,7 +93,7 @@ int size(queue q)
 }
 
 // Returns front element of queue
-int front(queue q)
+element_type front(queue q)
 {
 	return q.array[q.front];
 }
@@ -109,5 +114,11 @@ int is_full(queue q)
 		return 1;
 	else
 		return 0;
+}
+
+// Frees the queue structure
+void free(queue q)
+{
+	free(q.array);
 }
 
