@@ -19,8 +19,6 @@ struct node
 };
 
 typedef struct node node;
-typedef element_type node;
-
 
 // Function prototypes
 // ADT operations
@@ -140,5 +138,5 @@ void level_order(node* root)
 		if(temp->right)
 			q = enqueue(q, temp->right);
 	}
-	free(q);
+	free_queue(q);
 }
