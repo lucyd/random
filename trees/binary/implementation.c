@@ -95,7 +95,7 @@ node* find(node* root, int key)
 void preorder(node* root)
 {
 	if(root == NULL)
-		return NULL;
+		return;
 	printf("%d ",root->data);
 	preorder(root->left);
 	preorder(root->right);
@@ -125,18 +125,19 @@ void inorder(node* root)
 void level_order(node* root)
 {
 	if(root == NULL)
-		return NULL;
+		return;
 	node* temp = NULL;
-	queue q = create_empty_queue(20);
-	q = enqueue(q, root);
+	queue q = create_empty_queue(20, sizeof(node));
+	q = enqueue(q, (void*)root);
 	while(!is_empty(q))
 	{
-		temp = front(q);
+		temp = (node*)front(q);
 		printf("%d ",temp->data);
+		q = dequeue(q);
 		if(temp->left)
-			q = enqueue(q, temp->left);
+			q = enqueue(q, (void*)temp->left);
 		if(temp->right)
-			q = enqueue(q, temp->right);
+			q = enqueue(q, (void*)temp->right);
 	}
 	free_queue(q);
 }

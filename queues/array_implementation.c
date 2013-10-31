@@ -6,7 +6,7 @@
 
 #include<stdio.h>
 #include<stdlib.h>
-#include<strings.h>
+#include<string.h>
 #include<limits.h>
 
 // Structure definitions
@@ -48,6 +48,7 @@ queue create_empty_queue(int capacity, int element_size)
 }
 
 // Inserts element at the rear end of queue
+// (element should point to a void* typecasted address containing the element data)
 queue enqueue(queue q, void* element)
 {
 	if(is_full(q))
@@ -59,7 +60,7 @@ queue enqueue(queue q, void* element)
 			q = resize(q);
 		#endif
 	}
-	q.array[q.rear] = element;
+	memcpy(q.array + q.rear*q.element_size, element, q.element_size);
 	q.rear = (q.rear + 1)%q.capacity;
 	return q;
 }
@@ -77,8 +78,9 @@ queue resize(queue q)
 	int i=0;
 	void* new_array = (void*) malloc(q.element_size*q.capacity*2);
 	for(i=q.front; i<q.rear; i++)
-		new_array[i-q.front] = q.array[i];
+		memcpy(new_array+(i-q.front)*q.element_size, q.array+i*q.element_size, q.element_size);
 	q.array = new_array;
+	q.capacity *= 2;
 	return q;
 }
 
@@ -94,7 +96,7 @@ int size(queue q)
 // Returns front element of queue
 void* front(queue q)
 {
-	return q.array[q.front];
+	return q.array+(q.front*q.element_size);
 }
 
 // Returns 1 if queue is empty, 0 otherwise
@@ -119,25 +121,5 @@ int is_full(queue q)
 void free_queue(queue q)
 {
 	free(q.array);
-}
-
-int main()
-{
-	queue q = create_empty_queue(10, sizeof(int));
-	q = enqueue(q, (void*)10);
-	printf("Front of queue is %d\n",(int)front(q));
-	q = enqueue(q, (void*)20);
-	printf("Front of queue is %d\n",(int)front(q));
-	q = enqueue(q, (void*)30);
-	printf("Front of queue is %d\n",(int)front(q));
-	q = enqueue(q, (void*)40);
-	printf("Front of queue is %d\n",(int)front(q));
-	q = enqueue(q, (void*)50);
-	printf("Front of queue is %d\n",(int)front(q));
-	q = dequeue(q);
-	printf("Front of queue is %d\n",(int)front(q));
-	printf("Size of queue is %d\n",size(q));
-	free_queue(q);
-	return 0;
 }
 
