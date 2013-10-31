@@ -21,9 +21,12 @@ node* insert_at_end(node* original, int element);
 node* insert_at_begin(node* original, int element);
 node* delete_at_end(node* original);
 node* delete_at_begin(node* original);
+void delete_node(node* delete_node);
 node* append(node* list1, node* list2);
 node* find(node* haystack, int needle);
 node* reverse(node* list);
+node* reverse_recursive(node* list);
+node* reverse_iterative(node* list);
 node* find_median(node* list);
 node* nthfromlast(node* list, int n);
 void print_list(node* list);
@@ -94,6 +97,26 @@ node* delete_at_begin(node* original)
 	return new;
 }
 
+// Deletes the node at the pointer
+void delete_node(node* delete_node)
+{
+	if(delete_node == NULL)
+		return;
+	else if(delete_node->next == NULL)
+	{
+		free(delete_node);
+		return;
+	}
+	else
+	{
+		node* next_node = delete_node->next;
+		delete_node->data = next_node->data;
+		delete_node->next = next_node->next;
+		free(next_node);
+		return;
+	}
+}
+
 // Appends a list to another list
 node* append(node* list1, node* list2)
 {
@@ -127,7 +150,20 @@ node* find(node* haystack, int needle)
 }
 
 // Reverses a list
-node* reverse(node* list)
+node* reverse_recursive(node* list)
+{
+	if(list == NULL || list->next == NULL)
+		return list;
+	node *temp = NULL, *remaining = NULL;
+	temp = list->next;
+	remaining = reverse_recursive(temp);
+	temp->next = list;
+	list->next = NULL;
+	return remaining;
+}
+
+// Reverses a list
+node* reverse_iterative(node* list)
 {
 	if(list == NULL || list->next == NULL)
 		return list;
@@ -142,6 +178,12 @@ node* reverse(node* list)
 		current = next;
 	}
 	return previous;
+}
+
+// Reverses a list
+node* reverse(node* list)
+{
+	return reverse_iterative(list);
 }
 
 // Sorts(bubble) a list
