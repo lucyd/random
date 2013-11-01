@@ -21,7 +21,6 @@ node* insert_at_end(node* original, int element);
 node* insert_at_begin(node* original, int element);
 node* delete_at_end(node* original);
 node* delete_at_begin(node* original);
-void delete_node(node* delete_node);
 node* append(node* list1, node* list2);
 node* find(node* haystack, int needle);
 node* reverse(node* list);
@@ -29,8 +28,12 @@ node* reverse_recursive(node* list);
 node* reverse_iterative(node* list);
 node* find_median(node* list);
 node* nthfromlast(node* list, int n);
+node* split_half(node* list);
+node* merge(node* list1, node* list2);
+node* merge_sort(node* list);
+void selection_sort(node* list);
 void print_list(node* list);
-void bubble_sort(node* list);
+void delete_node(node* delete_node);
 int check_loop(node* list);
 int length(node* list);
 
@@ -95,26 +98,6 @@ node* delete_at_begin(node* original)
 	node* new = original->next;
 	free(original);
 	return new;
-}
-
-// Deletes the node at the pointer
-void delete_node(node* delete_node)
-{
-	if(delete_node == NULL)
-		return;
-	else if(delete_node->next == NULL)
-	{
-		free(delete_node);
-		return;
-	}
-	else
-	{
-		node* next_node = delete_node->next;
-		delete_node->data = next_node->data;
-		delete_node->next = next_node->next;
-		free(next_node);
-		return;
-	}
 }
 
 // Appends a list to another list
@@ -186,8 +169,17 @@ node* reverse(node* list)
 	return reverse_iterative(list);
 }
 
-// Sorts(bubble) a list
-void bubble_sort(node* list)
+// Sorts(using Merge sort) a list
+node* merge_sort(node* list)
+{
+	if(list == NULL || list->next == NULL)
+		return list;
+	node* split = split_half(list);
+	return merge(list, split);
+}
+
+// Sorts(using Selection sort) a list
+void selection_sort(node* list)
 {
 	if (list == NULL || list->next == NULL)
 		return;
@@ -297,3 +289,26 @@ void print_list(node* list)
 	printf("%d ", list->data);
 	print_list(list->next);
 }
+
+// Deletes the node at the pointer
+void delete_node(node* delete_node)
+{
+	if(delete_node == NULL)
+		return;
+	else if(delete_node->next == NULL)
+	{
+		free(delete_node);
+		return;
+	}
+	else
+	{
+		node* next_node = delete_node->next;
+		delete_node->data = next_node->data;
+		delete_node->next = next_node->next;
+		free(next_node);
+		return;
+	}
+}
+
+
+
