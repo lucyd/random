@@ -169,6 +169,24 @@ node* reverse(node* list)
 	return reverse_iterative(list);
 }
 
+// Splits the list into 2 half-lists(same-sized if possible)
+node* split_half(node* list)
+{
+	if(list == NULL || list->next == NULL)
+		return list;
+	node* temp = NULL, *once = NULL, *twice = NULL;
+	once = list;
+	twice = list;
+	while(twice != NULL && twice->next != NULL)
+	{
+		once = once->next;
+		twice = twice->next->next;
+	}
+	temp = once->next;
+	once->next = NULL;
+	return temp;
+}
+
 // Sorts(using Merge sort) a list
 node* merge_sort(node* list)
 {
