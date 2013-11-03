@@ -187,6 +187,46 @@ node* split_half(node* list)
 	return temp;
 }
 
+node* merge(node* list1, node* list2)
+{
+	if(list1 == NULL)
+		return list2;
+	else if(list2 == NULL)
+		return list1;
+	else
+	{
+		int swap_temp = 0;
+		node *pointer1 = NULL, *pointer2 = NULL, *temp = NULL;
+		pointer1 = list1;
+		pointer2 = list2;
+		while(pointer1 != NULL)
+		{
+			if(pointer1->data <= pointer2->data)
+				pointer1 = pointer1->next;
+			else
+			{
+				// Swap pointer1->data and pointer2->data
+				swap_temp = pointer2->data;
+				pointer2->data = pointer1->data;
+				pointer1->data = swap_temp;
+
+				// Make pointer2->next point to pointer1->next
+				temp = pointer2->next;
+				pointer2->next = pointer1->next;
+
+				// Update pointer1->next, pointer2
+				pointer1->next = pointer2;
+				pointer2 = temp;
+				pointer1 = pointer1->next;
+
+			}
+		}
+		if(pointer2 != NULL)
+			pointer1 = pointer2;
+		return list1;
+	}
+}
+
 // Sorts(using Merge sort) a list
 node* merge_sort(node* list)
 {
